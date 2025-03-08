@@ -1,39 +1,73 @@
 from pygame import*
-window = display.set_mode((700, 500))
+
+window = display.set_mode((700,500))
 display.set_caption("pm bs2 brainrot")
 background = transform.scale(image.load("gebura.jpg"), (800, 600))
-sprite1 = transform.scale(image.load("xalice.png"), (100, 100))
-sprite2 = transform.scale(image.load("png1.png"), (100, 100))
-x1 = 100
-y1 = 200
-x2 = 200
-y2 = 200
 
 clock = time.Clock()
 fps = 60
-clock.tick(fps)
 
+class GameSprite(sprite.Sprite):
+    def __init__(self, player_image, player_x, player_y, player_speed):
+        super().__init__()
+        self.image = transform.scale(image.load(player_image), (65, 65))
+        self.speed = player_speed
+        self.rect = self.image.get_rect()
+        self.rect.x = player_x
+        self.rect.y = player_y
+
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
+
+class Player(GameSprite):
+    def update(self):
+        keys = key.get_pressed()
+        if keys[K_UP] and self.rect.y > 5:
+            self.rect.y -= self.speed
+        if keys[K_DOWN] and self.rect.y < 500 - 80:
+            self.rect.y += self.speed
+        if keys[K_RIGHT] and self.rect.x < 700 - 80:
+            self.rect.x += self.speed
+        if keys[K_LEFT] and self.rect.x > 5:
+            self.rect.x -= self.speed
+
+class Enemy(GameSprite):
+    def update(self):
+        if self.rect.x <= 470:
+            self.direction = "right"
+        if self.rect.x >= 700 - 80:
+            self.direction = "left"
+        #if self.rect.y <= 470:
+            #self.direction = "down"
+        #if self.rect.y >= 700 - 80:
+            #self.direction = "up"
+
+        if self.direction == 'right':
+            self.rect.x += self.speed
+        if self.direction == 'left':
+            self.rect.x -= self.speed
+
+sprite1 = Player("png2.png", 200, 200, 10)
+sprite2 = Enemy("xalice.png", 200, 100, 10)
+sprite3 = GameSprite("door.png", 500, 200, 10)
+
+game_finish = False
 game = True
 while game:
-    window.blit(background,(-50, -50))
-    window.blit(sprite1, (x1, y1))
-    window.blit(sprite2, (x2, y2))
-
-    
     for e in event.get():
         if e.type == QUIT:
             game = False
-    keys = key.get_pressed()
-    if keys[K_UP] and y1 > 5:
-        y1 -= 10
-    if keys[K_DOWN] and y1 < 395:
-        y1 += 10
-    if keys[K_RIGHT] and x1 > 5:
-        x1 += 10
-    if keys[K_LEFT] and x1 < 395:
-        x1 -= 10
-    elif keys[K_s] and y2 < 395:
-        y2 += 10 
+    if game_finish != True:
 
+
+        window.blit(background,(-50, -50))
+        sprite1.update()
+        sprite2.update()
+        sprite3.update()
+        sprite1.reset()
+        sprite2.reset()
+        sprite3.reset()
 
     display.update()
+    clock.tick(fps)
