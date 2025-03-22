@@ -2,7 +2,7 @@ from pygame import*
 
 window = display.set_mode((800,600))
 display.set_caption("pm bs2 brainrot")
-background = transform.scale(image.load("gebura.jpg"), (900, 700))
+background = transform.scale(image.load("abn.webp"), (900, 700))
 
 clock = time.Clock()
 fps = 60
@@ -15,6 +15,7 @@ class GameSprite(sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = player_x
         self.rect.y = player_y
+        
 
     def reset(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
@@ -64,12 +65,12 @@ class Wall(sprite.Sprite):
     def draw_wall(self):
         window.blit(self.image, (self.rect.x, self.rect.y))
 
-w1 = Wall(0, 0, 0, 300, 100, 10, 400)
+w1 = Wall(0, 0, 0, 300, 100, 10, 500)
 w2 = Wall(0, 0, 0, 150, 100, 200, 10)
 w3 = Wall(0, 0, 0, 150, 100, 10, 300)
-w4 = Wall(0, 0, 0, 150, 100, 10, 300)
+w4 = Wall(0, 0, 0, 400, 100, 10, 300)
 
-sprite1 = Player("png2.png", 200, 200, 8)
+player = Player("png2.png", 200, 200, 8)
 sprite2 = Enemy("xalice.png", 200, 100, 8)
 sprite3 = GameSprite("door.png", 500, 320, 10)
 
@@ -84,10 +85,10 @@ while game:
     
     if game_finish != True:
         window.blit(background,(-50, -50))
-        sprite1.update()
+        player.update()
         sprite2.update()
         sprite3.update()
-        sprite1.reset()
+        player.reset()
         sprite2.reset()
         sprite3.reset()
         w1.draw_wall()
@@ -95,7 +96,8 @@ while game:
         w3.draw_wall()
         w4.draw_wall()
 
-        if sprite.collide_rect(sprite1, game_finish) or sprite.collide_rect(sprite2, Enemy) or sprite.collide_rect(sprite3, GameSprite) or sprite.collide_rect(sprite3, w2) or sprite.collide_rect(sprite3, w3) or sprite.collide_rect(sprite3, w4):
+
+        if sprite.collide_rect(player, sprite2) or sprite.collide_rect(player, w1) or sprite.collide_rect(player, w2) or sprite.collide_rect(player, w3) or sprite.collide_rect(player, w4):
             finish = True
             #money.play()
 
