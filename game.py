@@ -67,12 +67,20 @@ class Wall(sprite.Sprite):
 
 w1 = Wall(0, 0, 0, 300, 100, 10, 500)
 w2 = Wall(0, 0, 0, 150, 100, 200, 10)
-w3 = Wall(0, 0, 0, 150, 100, 10, 300)
+w3 = Wall(0, 0, 0, 150, 100, 10, 400)
 w4 = Wall(0, 0, 0, 400, 100, 10, 300)
+w5 = Wall(0, 0, 0, 150, 200, 90, 10)
+w6 = Wall(0, 0, 0, 220, 300, 90, 10)
+w7 = Wall(0, 0, 0, 150, 400, 90, 10)
 
-player = Player("png2.png", 200, 200, 8)
-sprite2 = Enemy("xalice.png", 200, 100, 8)
+player = Player("png2.png", 200, 120, 5)
+sprite2 = Enemy("xalice.png", 300, 30, 4.5)
 sprite3 = GameSprite("door.png", 500, 320, 10)
+
+font.init()
+font = font.Font(None, 70)
+win = font.render('You survived.', True, (139, 0, 0))
+loss = font.render('Loser.', True, (139,0,0))
 
 game_finish = False
 game = True
@@ -80,8 +88,6 @@ while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
-
-
     
     if game_finish != True:
         window.blit(background,(-50, -50))
@@ -95,11 +101,22 @@ while game:
         w2.draw_wall()
         w3.draw_wall()
         w4.draw_wall()
+        w5.draw_wall()  
+        w6.draw_wall()
+        w7.draw_wall()
 
 
-        if sprite.collide_rect(player, sprite2) or sprite.collide_rect(player, w1) or sprite.collide_rect(player, w2) or sprite.collide_rect(player, w3) or sprite.collide_rect(player, w4):
-            finish = True
+
+
+
+        if sprite.collide_rect(player, sprite2) or sprite.collide_rect(player, w1) or sprite.collide_rect(player, w2) or sprite.collide_rect(player, w3) or sprite.collide_rect(player, w4) or  sprite.collide_rect(player, w5) or sprite.collide_rect(player, w6) or sprite.collide_rect(player, w7):
+            game_finish = True
             #money.play()
+
+            window.blit(loss,(330,200))
+        if sprite.collide_rect(player, sprite3):
+            window.blit(win,(330,200))
+            game_finish = True
 
     display.update()
     clock.tick(fps)
