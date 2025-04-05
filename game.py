@@ -35,9 +35,9 @@ class Player(GameSprite):
 
 class Enemy(GameSprite):
     def update(self):
-        if self.rect.x <= 470:
+        if self.rect.x <= 600:
             self.direction = "right"
-        if self.rect.x >= 700 - 80:
+        if self.rect.x >= 820 - 80:
             self.direction = "left"
         #if self.rect.y <= 470:
             #self.direction = "down"
@@ -68,14 +68,20 @@ class Wall(sprite.Sprite):
 w1 = Wall(0, 0, 0, 300, 100, 10, 500)
 w2 = Wall(0, 0, 0, 150, 100, 200, 10)
 w3 = Wall(0, 0, 0, 150, 100, 10, 400)
-w4 = Wall(0, 0, 0, 400, 100, 10, 300)
+w4 = Wall(0, 0, 0, 410, 0, 10, 500)
 w5 = Wall(0, 0, 0, 150, 200, 90, 10)
 w6 = Wall(0, 0, 0, 220, 300, 90, 10)
 w7 = Wall(0, 0, 0, 150, 400, 90, 10)
+w8 = Wall(0, 0, 0, 410, 500, 280, 10)
+w9 = Wall(0, 0, 0, 680, 100, 10, 400)
+w10 = Wall(0, 0, 0, 410, 100, 190, 10)
+w11 = Wall(0, 0, 0, 600, 100, 10, 300)
+w12 = Wall(0, 0, 0, 410, 400, 115, 10)
+
 
 player = Player("png2.png", 200, 120, 5)
-sprite2 = Enemy("xalice.png", 300, 30, 4.5)
-sprite3 = GameSprite("door.png", 500, 320, 10)
+sprite2 = Enemy("xalice.png", 400, 140, 4.5)
+sprite3 = GameSprite("door.png", 490, 150, 10)
 
 font.init()
 font = font.Font(None, 70)
@@ -104,12 +110,17 @@ while game:
         w5.draw_wall()  
         w6.draw_wall()
         w7.draw_wall()
+        w8.draw_wall()
+        w9.draw_wall()
+        w10.draw_wall()
+        w11.draw_wall()
+        w12.draw_wall()
 
 
 
 
 
-        if sprite.collide_rect(player, sprite2) or sprite.collide_rect(player, w1) or sprite.collide_rect(player, w2) or sprite.collide_rect(player, w3) or sprite.collide_rect(player, w4) or  sprite.collide_rect(player, w5) or sprite.collide_rect(player, w6) or sprite.collide_rect(player, w7):
+        if sprite.collide_rect(player, sprite2) or sprite.collide_rect(player, w1) or sprite.collide_rect(player, w2) or sprite.collide_rect(player, w3) or sprite.collide_rect(player, w4) or  sprite.collide_rect(player, w5) or sprite.collide_rect(player, w6) or sprite.collide_rect(player, w7) or sprite.collide_rect(player, w8) or sprite.collide_rect(player, w9) or sprite.collide_rect(player, w10) or sprite.collide_rect(player, w11) or sprite.collide_rect(player, w12):
             game_finish = True
             #money.play()
 
